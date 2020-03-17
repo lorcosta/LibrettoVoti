@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * Memorizza e gestisce un insieme di voti superati.
  * 
- * @author Fulvio
+ * @author Lorenzo
  *
  */
 public class Libretto {
 
-	private List<Voto> voti = new ArrayList<>();
+
 
 	/**
 	 * Aggiunge un nuovo voto al libretto
@@ -19,7 +19,7 @@ public class Libretto {
 	 * @param v Voto da aggiungere
 	 */
 	public void add(Voto v) {
-		this.voti.add(v);
+		
 	}
 
 	/**
@@ -30,13 +30,7 @@ public class Libretto {
 	 * @return stringa formattata per visualizzare il sotto-libretto
 	 */
 	public String stampaVotiUguali(int voto) {
-		String s = "";
-		for (Voto v : this.voti) {
-			if (v.getVoto() == voto) {
-				s += v.toString() + "\n";
-			}
-		}
-		return s;
+		
 	}
 	
 	/**
@@ -46,21 +40,11 @@ public class Libretto {
 	 * @return nuovo Libretto "ridotto"
 	 */
 	public Libretto estraiVotiUguali(int voto) {
-		Libretto nuovo = new Libretto() ;
-		for(Voto v: this.voti) {
-			if(v.getVoto()==voto) {
-				nuovo.add(v);
-			}
-		}
-		return nuovo ;
+		
 	}
 
 	public String toString() {
-		String s = "";
-		for (Voto v : this.voti) {
-			s += v.toString() + "\n";
-		}
-		return s;
+		
 	}
 
 }
