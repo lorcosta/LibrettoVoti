@@ -10,8 +10,7 @@ import java.util.List;
  *
  */
 public class Libretto {
-
-
+	private List<Voto> voti= new ArrayList<>();
 
 	/**
 	 * Aggiunge un nuovo voto al libretto
@@ -19,7 +18,7 @@ public class Libretto {
 	 * @param v Voto da aggiungere
 	 */
 	public void add(Voto v) {
-		
+		 this.voti.add(v);
 	}
 
 	/**
@@ -30,21 +29,35 @@ public class Libretto {
 	 * @return stringa formattata per visualizzare il sotto-libretto
 	 */
 	public String stampaVotiUguali(int voto) {
-		
+		String votiUguali="";
+		for(Voto v: this.voti) {
+			if(v.getVoto()==voto)
+				votiUguali+=v.toString()+"\n";
+		}
+		return votiUguali;
 	}
 	
 	/**
 	 * Genera un nuovo libretto, a partire da quello esistente,
-	 * che conterrà esclusivamenti i voti con votazione pari a quella specificata.
+	 * che conterrà esclusivamente i voti con votazione pari a quella specificata.
 	 * @param voto votazione specificata
 	 * @return nuovo Libretto "ridotto"
 	 */
 	public Libretto estraiVotiUguali(int voto) {
-		
+		Libretto libretto=new Libretto();
+		for(Voto v:this.voti) {
+			if(v.getVoto()==voto)
+				libretto.add(v);
+		}
+		return libretto;
 	}
 
 	public String toString() {
-		
+		String s="";
+		for(Voto v:this.voti) {
+			s+=v.toString()+"\n";
+		}
+		return s;
 	}
 
 }
