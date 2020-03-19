@@ -16,9 +16,14 @@ public class Libretto {
 	 * Aggiunge un nuovo voto al libretto
 	 * 
 	 * @param v Voto da aggiungere
+	 * @return Restituisce {@code true} se inserisco il voto, {@code false} se non ha inserito 
+	 * perche' in conflitto o duplicato
 	 */
-	public void add(Voto v) {
+	public boolean add(Voto v) {
+		if(this.isConflitto(v) || this.isDuplicato(v))
+			return false;//non inserisco il voto perchè sarebbe duplicato o in conflitto
 		 this.voti.add(v);
+		 return true;
 	}
 
 	/**
@@ -59,5 +64,70 @@ public class Libretto {
 		}
 		return s;
 	}
-
+	/**
+	 * Dato il nome di un corso, ricerca se quell'esame esiste nel libretto, 
+	 * in caso affermativo restituisce l'oggetto {@link Voto} corrispondente.
+	 * Se l'esame non esiste restituisce {@code null}
+	 * @param nomeCorso
+	 * @return Se il corso esiste ritorna il {@link Voto} corrispondente, {@code null} altrimenti
+	 */
+	public Voto cercaNomeCorso(String nomeCorso) {
+		/*for(Voto v:voti) {
+			if(v.getCorso().compareTo(nomeCorso)==0)
+				return v;
+		}
+		return null;*/
+		int pos=this.voti.indexOf(new Voto(nomeCorso, 0, null) );
+		if(pos!=-1)
+			return voti.get(pos);
+		return null;
+	}
+	/**
+	 * Ritorna {@code true} se il corso specificato dal {@link Voto} {@code v} 
+	 * esiste nel libretto, con la stessa valutazione. 
+	 * Se non esiste, o se la valutazione e' diversa ritorna {@code false}
+	 * @param v il {@link Voto} da cercare
+	 * @returnl'esistenza di un duplicato
+	 */
+	public boolean isDuplicato(Voto v) {
+		Voto esiste= this.cercaNomeCorso(v.getCorso());
+		if(esiste==null)
+			return false;//non l'ho trovato quindi non può essere duplicato
+		/*if(esiste.getVoto()==v.getVoto())
+			return true;
+		else return false;*/
+		return (esiste.getVoto()==v.getVoto());
+	}
+	/**
+	 * Determina se esiste un {@link voto} con lo stesso nome corso ma con valutazione diversa
+	 * @param v
+	 * @return
+	 */
+	public boolean isConflitto(Voto v) {
+		Voto esiste= this.cercaNomeCorso(v.getCorso());
+		if(esiste==null)
+			return false;//non l'ho trovato quindi non può essere duplicato
+		return (esiste.getVoto()!=v.getVoto());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
