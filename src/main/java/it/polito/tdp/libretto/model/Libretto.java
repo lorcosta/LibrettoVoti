@@ -1,6 +1,7 @@
 package it.polito.tdp.libretto.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,6 +13,23 @@ import java.util.List;
 public class Libretto {
 	private List<Voto> voti= new ArrayList<>();
 
+	/**
+	 * Costruttore del {@link Libretto}, crea un libretto nuovo e vuoto
+	 */
+	public Libretto() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * Copy constructor
+	 * "Shallow" (copia superficiale), solo copie di oggetto corrente
+	 * @param lib
+	 */
+	//Mi va bene che questo metodo sia shallow perchè devo solo accedere ai voti e non modificarli
+	public Libretto(Libretto lib) {
+		this.voti.addAll(lib.voti);
+	}
+	
 	/**
 	 * Aggiunge un nuovo voto al libretto
 	 * 
@@ -109,11 +127,52 @@ public class Libretto {
 			return false;//non l'ho trovato quindi non può essere duplicato
 		return (esiste.getVoto()!=v.getVoto());
 	}
-	
-	
-	
-	
-	
+	/**
+	 * Restituisce un nuovo libretto migliorando i voti del {@link Libretto} attuale.
+	 * @return 
+	 */
+	public Libretto creaLibrettoMigliorato() {
+		Libretto nuovo= new Libretto();
+		for(Voto v:this.voti) {
+			//Voto v2=new Voto(v); //Meno leggibilità del codice
+			Voto v2=v.clone();
+			if(v2.getVoto()>=24) {
+				v2.setVoto(v.getVoto()+2);
+				if(v2.getVoto()>30)
+					v2.setVoto(30);
+			}else if(v.getVoto()>=18) {
+				v2.setVoto(v.getVoto()+1);
+			}
+			nuovo.add(v2);
+		}
+		return nuovo;
+	}
+	/**
+	 * Riordina alfabeticamente i voti presenti nel 
+	 * libretto corrente per corso
+	 */
+	public void ordinaPerCorso() {
+		Collections.sort(voti);
+	}
+	/**
+	 * Riordina in ordine di voto i voti presenti 
+	 * nel libretto corrente
+	 */
+	public void ordinaPerVoto() {
+		Collections.sort(voti, new ConfrontaVotiPerValutazione());
+	}
+	/**
+	 * Elimina dal libretto tutti i voti minori a 24
+	 */
+	public void cancellaVotiScarsi() {
+		List<Voto> daRimuovere= new ArrayList<>();
+		for(Voto v:this.voti) {
+			if(v.getVoto()<24) {
+				daRimuovere.add(v);
+			}
+		}
+		this.voti.removeAll(daRimuovere);
+	}
 	
 	
 	

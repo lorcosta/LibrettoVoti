@@ -37,6 +37,28 @@ public class TestLibretto {
 				"/ conflitto: "+lib.isConflitto(economia2));
 		System.out.println("Economia con 21 e' duplicato: "+lib.isDuplicato(economia3)+
 				"/ conflitto: "+lib.isConflitto(economia3));
+		//7. Migliora il libretto
+		Libretto migliorato=lib.creaLibrettoMigliorato();
+		System.out.println("Miglioramento del libretto:\n");
+		System.out.println(lib);
+		System.out.println(migliorato);
+		//8. Stampa ordine alfabetico
+		System.out.println("Stampo in ordine alfabetico di corso\n");
+		Libretto alfabetico=new Libretto(lib);
+		alfabetico.ordinaPerCorso();
+		System.out.println(alfabetico);
+		System.out.println("Stampo in ordine di voto");
+		Libretto votiDecrescenti= new Libretto(lib);
+		votiDecrescenti.ordinaPerVoto();
+		System.out.println(votiDecrescenti);
+		//9. Elimina voti bassi
+		lib.add(new Voto("Chimica",19,LocalDate.now()));
+		lib.ordinaPerCorso();
+		System.out.println("Esami presenti nel libretto: \n");
+		System.out.println(lib);
+		lib.cancellaVotiScarsi();
+		System.out.println("Rimuovo i voti scarsi:\n");
+		System.out.println(lib);
 		
 	}
 
